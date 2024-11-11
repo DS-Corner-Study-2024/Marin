@@ -330,6 +330,26 @@ export default App;
 
 
 
+/*
+function App() {
+  const BodyProps = { 
+    name: "이서진",
+    studentnumber: "20230818",
+  };
+
+  return (
+    <div className="App">
+      <Header />
+      <Body {...BodyProps} /> 
+      <Footer />
+    </div>
+  );
+}
+export default App;
+
+*/
+
+
 
 
 

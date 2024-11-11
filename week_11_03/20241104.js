@@ -31,7 +31,7 @@
 
 // 문제 1) 인라인 스타일링을 사용하여 body의 백경색이 보라색, 글자색은 초록색이 되게 만드시오
 
-
+/*
 function Body() {
     return (
       <div style={{ backgroundColor: "purple", color: "green" }}> 
@@ -78,3 +78,4 @@ function Body({ name, studentnumber }) {
       </div>
     );
   }
+*/
