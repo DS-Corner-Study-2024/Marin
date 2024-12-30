@@ -8,6 +8,7 @@ const Header = () => {
 */
 
 //2.2.2 오늘의 날짜 렌더링
+// 2024-12-30
 import "./Header.css";
 
 const Header = () => {
@@ -19,3 +20,5 @@ const Header = () => {
     );
   };
   export default Header;
+
+

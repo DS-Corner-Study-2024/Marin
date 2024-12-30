@@ -14,8 +14,9 @@ const TodoList = () => {
 export default TodoList;
 */
 
-
+/*
 // 2.4.3 TodoList에 Todoitm 컴포넌트 배치하기
+// 2024-12-30
 import TodoItem from "./TodoItem";
 import "./TodoList.css";
 
@@ -28,6 +29,242 @@ const TodoList = () => {
         <TodoItem />
         <TodoItem />
         <TodoItem />
+      </div>
+    </div>
+  );
+};
+export default TodoList;
+*/
+
+/*
+// src/component/TodoList.js
+// 5.1.2 map을 이용해 컴포넌트 반복하기
+import TodoItem from "./TodoItem";
+import "./TodoList.css";
+
+const TodoList = ({ todo }) => { 
+  return (
+    <div className="TodoList">
+      <h4>Todo List 🌱</h4>
+      <input className="searchbar" placeholder="검색어를 입력하세요" />
+      <div className="list_wrapper">
+        {todo.map((it) => ( 
+          <div>{it.content}</div>
+        ))}
+      </div>
+    </div>
+  );
+};
+export default TodoList;
+*/
+
+
+
+
+/*
+// src/component/TodoList.js
+// 5.1.3 map을 이용해 컴포넌트 반복하기
+
+import TodoItem from "./TodoItem";
+import "./TodoList.css";
+
+const TodoList = ({ todo }) => { 
+  return (
+    <div className="TodoList">
+      <h4>Todo List 🌱</h4>
+      <input className="searchbar" placeholder="검색어를 입력하세요" />
+      <div className="list_wrapper">
+        {todo.map((it) => (
+          <TodoItem {...it} /> 
+        ))}
+      </div>
+    </div>
+  );
+};
+export default TodoList;
+*/
+
+/*
+// src/component/TodoList.js
+// 5.1.4 key 설정하기
+import TodoItem from "./TodoItem";
+import "./TodoList.css";
+
+const TodoList = ({ todo }) => { 
+  return (
+    <div className="TodoList">
+      <h4>Todo List 🌱</h4>
+      <input className="searchbar" placeholder="검색어를 입력하세요" />
+      <div className="list_wrapper">
+        {todo.map((it) => (
+          <TodoItem key={it.id} {...it} />
+        ))}
+      </div>
+    </div>
+  );
+};
+export default TodoList;
+*/
+
+/*
+// src/component/TodoList.js
+// 5.2.1 검색 기능 만들기 
+import { useState } from "react";
+import TodoItem from "./TodoItem";
+import "./TodoList.css";
+
+const TodoList = ({ todo }) => {
+  const [search, setSearch] = useState(""); 
+  const onChangeSearch = (e) => { 
+    setSearch(e.target.value);
+  };
+  const getSearchResult = () => {
+    return search === ""
+      ? todo
+      : todo.filter((it) => it.content.includes(search));
+  };
+
+
+  return (
+    <div className="TodoList">
+      <h4>Todo List 🌱</h4>
+      <input
+        value={search} 
+        onChange={onChangeSearch} 
+        className="searchbar"
+        placeholder="검색어를 입력하세요"
+      />
+      <div className="list_wrapper">
+        {getSearchResult().map((it) => ( 
+          <TodoItem key={it.id} {...it} />
+        ))}
+      </div>
+    </div>
+  );
+};
+export default TodoList;
+*/
+
+/*
+// src/component/TodoList.js
+// 5.2.2 대소 문자를 구별하지 않게 하기
+import { useState } from "react";
+import TodoItem from "./TodoItem";
+import "./TodoList.css";
+
+const TodoList = ({ todo }) => {
+  const [search, setSearch] = useState(""); 
+  const onChangeSearch = (e) => { 
+    setSearch(e.target.value);
+  };
+  const getSearchResult = () => {
+    return search === ""
+      ? todo
+      : todo.filter((it) =>
+          it.content.toLowerCase().includes(search.toLowerCase())
+        );
+  };
+
+
+  return (
+    <div className="TodoList">
+      <h4>Todo List 🌱</h4>
+      <input
+        value={search} 
+        onChange={onChangeSearch} 
+        className="searchbar"
+        placeholder="검색어를 입력하세요"
+      />
+      <div className="list_wrapper">
+        {getSearchResult().map((it) => ( 
+          <TodoItem key={it.id} {...it} />
+        ))}
+      </div>
+    </div>
+  );
+};
+export default TodoList;
+*/
+
+/*
+// src/component/TodoList.js
+// 6.1.2 아이템 수정 함수 만들기 
+import { useState } from "react";
+import TodoItem from "./TodoItem";
+import "./TodoList.css";
+
+const TodoList = ({ todo, onUpdate }) => {
+  const [search, setSearch] = useState(""); 
+  const onChangeSearch = (e) => { 
+    setSearch(e.target.value);
+  };
+  const getSearchResult = () => {
+    return search === ""
+      ? todo
+      : todo.filter((it) =>
+          it.content.toLowerCase().includes(search.toLowerCase())
+        );
+  };
+
+
+  return (
+    <div className="TodoList">
+      <h4>Todo List 🌱</h4>
+      <input
+        value={search} 
+        onChange={onChangeSearch} 
+        className="searchbar"
+        placeholder="검색어를 입력하세요"
+      />
+      <div className="list_wrapper">
+        {getSearchResult().map((it) => (
+          <TodoItem key={it.id} {...it} onUpdate={onUpdate} /> 
+        ))}
+      </div>
+    </div>
+  );
+};
+export default TodoList;
+*/
+
+// src/component/TodoList.js
+// 7.2.2 아이템 삭제 함수 만들기 
+import { useState } from "react";
+import TodoItem from "./TodoItem";
+import "./TodoList.css";
+
+const TodoList = ({ todo, onUpdate, onDelete }) => {
+  const [search, setSearch] = useState(""); 
+  const onChangeSearch = (e) => { 
+    setSearch(e.target.value);
+  };
+  const getSearchResult = () => {
+    return search === ""
+      ? todo
+      : todo.filter((it) =>
+          it.content.toLowerCase().includes(search.toLowerCase())
+        );
+  };
+
+
+  return (
+    <div className="TodoList">
+      <h4>Todo List 🌱</h4>
+      <input
+        value={search} 
+        onChange={onChangeSearch} 
+        className="searchbar"
+        placeholder="검색어를 입력하세요"
+      />
+      <div className="list_wrapper">
+        {getSearchResult().map((it) => (
+          <TodoItem
+            key={it.id}
+            {...it}
+            onUpdate={onUpdate}
+            onDelete={onDelete} 
+          />
+        ))}
       </div>
     </div>
   );
