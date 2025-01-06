@@ -76,10 +76,9 @@ const TodoItem = ({ id, content, isDone, createdDate, onUpdate }) => {
 export default TodoItem;
 */
 
+/*
 // src/component/TodoItem.js
 // 7.3.1 TodoItem 컴포넌트에서 삭제 함수 호출하기
-import "./TodoItem.css";
-
 import "./TodoItem.css";
 
 const TodoItem = ({ id, content, isDone, createdDate, onUpdate, onDelete }) => { 
@@ -106,3 +105,35 @@ const TodoItem = ({ id, content, isDone, createdDate, onUpdate, onDelete }) => {
   );
 };
 export default TodoItem;
+*/
+
+// src/component/TodoItem.js
+// 3.2 TodoItemp 컴포넌트 리렌더 방지하기
+import "./TodoItem.css";
+import React from "react";
+
+const TodoItem = ({ id, content, isDone, createdDate, onUpdate, onDelete }) => { 
+  //console.log(`${id} TodoItem 업데이트`);
+  const onChangeCheckbox = () => {
+    onUpdate(id);
+  };
+  const onClickDelete = () => { 
+    onDelete(id);
+  };
+
+  return (
+    <div className="TodoItem">
+      <div className="checkbox_col">
+        <input onChange={onChangeCheckbox} checked={isDone} type="checkbox" />
+      </div>
+      <div className="title_col">{content}</div>
+      <div className="date_col">
+        {new Date(createdDate).toLocaleDateString()}
+      </div>
+      <div className="btn_col">
+        <button onClick={onClickDelete}>삭제</button> 
+      </div>
+    </div>
+  );
+};
+export default React.memo(TodoItem);

@@ -226,7 +226,7 @@ const TodoList = ({ todo, onUpdate }) => {
 };
 export default TodoList;
 */
-
+/*
 // src/component/TodoList.js
 // 7.2.2 아이템 삭제 함수 만들기 
 import { useState } from "react";
@@ -250,6 +250,197 @@ const TodoList = ({ todo, onUpdate, onDelete }) => {
   return (
     <div className="TodoList">
       <h4>Todo List 🌱</h4>
+      <input
+        value={search} 
+        onChange={onChangeSearch} 
+        className="searchbar"
+        placeholder="검색어를 입력하세요"
+      />
+      <div className="list_wrapper">
+        {getSearchResult().map((it) => (
+          <TodoItem
+            key={it.id}
+            {...it}
+            onUpdate={onUpdate}
+            onDelete={onDelete} 
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+export default TodoList;
+*/
+
+
+/*
+// 2025-01-06 8장 최적화화
+// src/component/TodoList.js
+// 2. 함수의 불필요한 재호출 방지하기
+// 2.1 할 일 분석 기능 추가하기기
+import { useState } from "react";
+import TodoItem from "./TodoItem";
+import "./TodoList.css";
+
+const TodoList = ({ todo, onUpdate, onDelete }) => {
+  const [search, setSearch] = useState(""); 
+  const onChangeSearch = (e) => { 
+    setSearch(e.target.value);
+  };
+  const getSearchResult = () => {
+    return search === ""
+      ? todo
+      : todo.filter((it) =>
+          it.content.toLowerCase().includes(search.toLowerCase())
+        );
+  };
+  const analyzeTodo = () => {
+    console.log("analyzeTodo 함수 호출");
+    const totalCount = todo.length;
+    const doneCount = todo.filter((it) => it.isDone).length;
+    const notDoneCount = totalCount - doneCount;
+    return{
+      totalCount,
+      doneCount,
+      notDoneCount,
+    };
+  };
+  const {totalCount, doneCount, notDoneCount} = analyzeTodo();
+
+
+  return (
+    <div className="TodoList">
+      <h4>Todo List 🌱</h4>
+      <div>
+        <div>총개수: {totalCount}</div>
+        <div>완료된 할 일: {doneCount}</div>
+        <div>아직 완료하지 못한 할 일: {notDoneCount}</div>
+      </div>
+      <input
+        value={search} 
+        onChange={onChangeSearch} 
+        className="searchbar"
+        placeholder="검색어를 입력하세요"
+      />
+      <div className="list_wrapper">
+        {getSearchResult().map((it) => (
+          <TodoItem
+            key={it.id}
+            {...it}
+            onUpdate={onUpdate}
+            onDelete={onDelete} 
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+export default TodoList;
+*/
+/*
+// src/component/TodoList.js
+// 2.2 문제점파악하기기
+import { useState } from "react";
+import TodoItem from "./TodoItem";
+import "./TodoList.css";
+
+const TodoList = ({ todo, onUpdate, onDelete }) => {
+  const [search, setSearch] = useState(""); 
+  const onChangeSearch = (e) => { 
+    setSearch(e.target.value);
+  };
+  const getSearchResult = () => {
+    return search === ""
+      ? todo
+      : todo.filter((it) =>
+          it.content.toLowerCase().includes(search.toLowerCase())
+        );
+  };
+  const analyzeTodo = () => {
+    console.log("analyzeTodo 함수 호출");
+    const totalCount = todo.length;
+    const doneCount = todo.filter((it) => it.isDone).length;
+    const notDoneCount = totalCount - doneCount;
+    return{
+      totalCount,
+      doneCount,
+      notDoneCount,
+    };
+  };
+  const {totalCount, doneCount, notDoneCount} = analyzeTodo();
+
+
+  return (
+    <div className="TodoList">
+      <h4>Todo List 🌱</h4>
+      <div>
+        <div>총개수: {totalCount}</div>
+        <div>완료된 할 일: {doneCount}</div>
+        <div>아직 완료하지 못한 할 일: {notDoneCount}</div>
+      </div>
+      <input
+        value={search} 
+        onChange={onChangeSearch} 
+        className="searchbar"
+        placeholder="검색어를 입력하세요"
+      />
+      <div className="list_wrapper">
+        {getSearchResult().map((it) => (
+          <TodoItem
+            key={it.id}
+            {...it}
+            onUpdate={onUpdate}
+            onDelete={onDelete} 
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+export default TodoList;
+*/
+
+
+// src/component/TodoList.js
+// 2.3 재호출방지하기
+import { useMemo, useState } from "react";
+import TodoItem from "./TodoItem";
+import "./TodoList.css";
+
+const TodoList = ({ todo, onUpdate, onDelete }) => {
+  const [search, setSearch] = useState(""); 
+  const onChangeSearch = (e) => { 
+    setSearch(e.target.value);
+  };
+  const getSearchResult = () => {
+    return search === ""
+      ? todo
+      : todo.filter((it) =>
+          it.content.toLowerCase().includes(search.toLowerCase())
+        );
+  };
+  const analyzeTodo = useMemo(() => {
+    //console.log("analyzeTodo 함수 호출");
+    const totalCount = todo.length;
+    const doneCount = todo.filter((it) => it.isDone).length;
+    const notDoneCount = totalCount - doneCount;
+    return{
+      totalCount,
+      doneCount,
+      notDoneCount,
+    };
+  }, [todo]);
+  const {totalCount, doneCount, notDoneCount} = analyzeTodo;
+
+
+  return (
+    <div className="TodoList">
+      <h4>Todo List 🌱</h4>
+      <div>
+        <div>총개수: {totalCount}</div>
+        <div>완료된 할 일: {doneCount}</div>
+        <div>아직 완료하지 못한 할 일: {notDoneCount}</div>
+      </div>
       <input
         value={search} 
         onChange={onChangeSearch} 
