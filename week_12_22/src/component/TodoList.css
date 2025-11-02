@@ -1,0 +1,26 @@
+/*
+// 2.4 TodoList, TodoItem 컨포넌트 만들기
+// 2.4.1 TodoList컴포넌트 만들기
+*/
+/* 검색 폼에 스타일 적용 */
+.TodoList .searchbar {
+    margin-bottom: 20px;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgb(220, 220, 220);
+    box-sizing: border-box;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  
+  /* 검색 폼을 클릭했을 때의 스타일 적용 */
+  .TodoList .searchbar:focus {
+    outline: none;
+    border-bottom: 1px solid #1f93ff;
+  }
+  /* // 2.4.3 TodoList에 Todoitm 컴포넌트 배치하기*/
+  .TodoList .list_wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
